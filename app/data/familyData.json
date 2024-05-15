@@ -1,0 +1,407 @@
+[
+  {
+    "id": "1",
+    "level": 0,
+    "label": "John Lewis",
+    "type": "Root",
+    "image": "images/john-lewis.jpg",
+    "dob": "08/07/1878",
+    "dod": "04/09/1923",
+    "pob": "New York, US",
+    "pod": "New York, US",
+    "burialPlace": "Bayside Cemetery, New York, US",
+    "bio": [
+      "Elder son of William Lewis, who owned the John Lewis department store, London, Spedan join the business at 19 and in 1914 assumed control of Peter Jones in Sloane Square, London.",
+      "On his father's death he form the John Lewis Partnership and began distributing profits among its employees in the 1929. He transferred control of the company to the employees in the 1950 and resigned as chairman in 1955."
+    ],
+    "sub": [
+      {
+        "id": "2",
+        "level": 0,
+        "label": "Mary Lewis",
+        "type": "Wife",
+        "dob": "07/23/1886",
+        "dod": "02/02/1968",
+        "pob": "New York, US",
+        "pod": "New York, US",
+        "burialPlace": "Bayside Cemetery, New York, US",
+        "image": "images/mary-lewis.jpg",
+        "bio": [
+          "Mary Lewis was the wife of John Lewis. She was a philanthropist and a social worker"
+        ],
+        "sub": [],
+        "child": []
+      },
+      {
+        "id": "3",
+        "level": 0,
+        "label": "Elizabeth Collins",
+        "type": "Ex-Wife",
+        "dob": "08/03/1870",
+        "dod": "09/11/1907",
+        "pob": "New York, US",
+        "pod": "New York, US",
+        "burialPlace": "Sleepy Hollow Cemetery, New York, US",
+        "image": "images/elizabeth-collins.jpg",
+        "bio": [
+          "Elizabeth Collins was the first wife of John Lewis. She was a social worker and a philanthropist"
+        ],
+        "sub": [],
+        "child": []
+      }
+    ],
+    "child": [
+      {
+        "id": "4",
+        "level": 1,
+        "label": "Steven Lewis",
+        "type": "Son",
+        "image": "images/steven-lewis.jpg",
+        "dob": "01/21/1908",
+        "dod": "01/12/1981",
+        "pob": "New York, US",
+        "pod": "New York, US",
+        "burialPlace": "West Point Cemetery, New York, US",
+        "bio": [
+          "Steven Lewis was the son of John Lewis and Elizabeth Collins. He was the first chairman of the John Lewis Partnership, which he co-founded with his father. He was also the first chairman of the Waitrose supermarket chain."
+        ],
+        "sub": [
+          {
+            "id": "5",
+            "level": 1,
+            "label": "Barbara Lewis",
+            "type": "Wife",
+            "dob": "10/13/1912",
+            "dod": "01/01/2002",
+            "pob": "New York, US",
+            "pod": "New York, US",
+            "image": "images/barbara-lewis.jpg",
+            "burialPlace": "West Point Cemetery, New York, US",
+            "bio": [
+              "Barbara Lewis was the wife of Steven Lewis. She was a philanthropist and a social worker"
+            ],
+            "sub": [],
+            "child": []
+          }
+        ],
+        "child": [
+          {
+            "id": "6",
+            "level": 2,
+            "label": "James Lewis",
+            "type": "Son",
+            "image": "images/james-lewis.jpg",
+            "dob": "03/07/1931",
+            "dod": "03/17/1990",
+            "pob": "New York, US",
+            "pod": "New York, US",
+            "burialPlace": "Greenwood Cemetery, New York, US",
+            "bio": [
+              "James Lewis was the eldest son of Steven Lewis and Barbara Lewis. He was the chairman of the John Lewis Partnership and the Waitrose supermarket chain."
+            ],
+            "sub": [
+              {
+                "id": "9",
+                "level": 2,
+                "label": "Rose Lewis",
+                "type": "Wife",
+                "dob": "02/29/1936",
+                "dod": "05/16/2018",
+                "pob": "New York, US",
+                "pod": "New York, US",
+                "image": "images/sarah-lewis.jpg",
+                "burialPlace": "Greenwood Cemetery, New York, US",
+                "bio": [
+                  "Rose Lewis was the wife of James Lewis. She was a philanthropist and a social worker"
+                ],
+                "sub": [],
+                "child": []
+              }
+            ],
+            "child": [
+              {
+                "id": "10",
+                "level": 3,
+                "label": "Lily Adam",
+                "type": "Daughter",
+                "image": "images/lily-adam.jpg",
+                "dob": "06/23/1957",
+                "dod": "",
+                "pob": "New York, US",
+                "pod": "",
+                "burialPlace": "",
+                "bio": [
+                  "Lily Adam was the daughter of James Lewis and Rose Lewis. She was a philanthropist and a social worker"
+                ],
+                "sub": [],
+                "child": []
+              },
+              {
+                "id": "11",
+                "level": 3,
+                "label": "Vladimir Lewis",
+                "type": "Son",
+                "image": "images/vladimir-lewis.jpg",
+                "dob": "10/09/1964",
+                "dod": "",
+                "pob": "New York, US",
+                "pod": "",
+                "burialPlace": "",
+                "bio": [
+                  "Vladimir Lewis was the youngest son of James Lewis and Rose Lewis. He was the chairman of the John Lewis Partnership and the Waitrose supermarket chain."
+                ],
+                "sub": [],
+                "child": []
+              }
+            ]
+          },
+          {
+            "id": "7",
+            "level": 2,
+            "label": "Anastasia Adams",
+            "type": "Daughter",
+            "image": "images/anastasia-adams.jpg",
+            "dob": "06/22/1937",
+            "dod": "",
+            "pob": "New York, US",
+            "pod": "",
+            "burialPlace": "",
+            "bio": [
+              "Anastasia Adams was the daughter of Steven Lewis and Barbara Lewis. She was a philanthropist and a social worker"
+            ],
+            "sub": [
+              {
+                "id": "8",
+                "level": 2,
+                "label": "John Adams",
+                "type": "Husband",
+                "dob": "01/20/1935",
+                "dod": "12/10/1997",
+                "pob": "New York, US",
+                "pod": "New York, US",
+                "image": "images/john-adams.jpg",
+                "burialPlace": "Greenwood Cemetery, New York, US",
+                "bio": [
+                  "John Adams was the husband of Anastasia Adams. He was a philanthropist and a social worker"
+                ],
+                "sub": [],
+                "child": []
+              }
+            ],
+            "child": []
+          },
+          {
+            "id": "12",
+            "level": 2,
+            "label": "Benjamin Lewis",
+            "type": "Son",
+            "image": "images/benjamin-lewis.jpg",
+            "dob": "10/09/1938",
+            "dod": "09/10/2012",
+            "pob": "New York, US",
+            "pod": "New York, US",
+            "burialPlace": "Greenwood Cemetery, New York, US",
+            "bio": [
+              "William Lewis was the son of Steven Lewis and Barbara Lewis. He was the chairman of the John Lewis Partnership and the Waitrose supermarket chain."
+            ],
+            "sub": [],
+            "child": []
+          },
+          {
+            "id": "13",
+            "level": 2,
+            "label": "Andrew Lewis",
+            "type": "Son",
+            "image": "images/andrew-lewis.jpg",
+            "dob": "07/14/1945",
+            "dod": "10/17/2003",
+            "pob": "New York, US",
+            "pod": "New York, US",
+            "burialPlace": "Greenwood Cemetery, New York, US",
+            "bio": [
+              "Andrew Lewis was the youngest son of Steven Lewis and Barbara Lewis. He was the chairman of the John Lewis Partnership and the Waitrose supermarket chain."
+            ],
+            "sub": [],
+            "child": []
+          }
+        ]
+      },
+      {
+        "id": "14",
+        "level": 1,
+        "label": "Johnathan Lewis",
+        "type": "Son",
+        "image": "images/johnathan-lewis.jpg",
+        "dob": "11/19/1915",
+        "dod": "12/31/1981",
+        "pob": "New York, US",
+        "pod": "New York, US",
+        "burialPlace": "West Point Cemetery, New York, US",
+        "bio": [
+          "Johnathan Lewis was the son of John Lewis and Mary Lewis. He was the first chairman of the John Lewis Partnership, which he co-founded with his father. He was also the first chairman of the Waitrose supermarket chain."
+        ],
+        "sub": [
+          {
+            "id": "15",
+            "level": 1,
+            "label": "Emma Lewis",
+            "type": "Wife",
+            "dob": "01/18/1922",
+            "dod": "09/04/1992",
+            "pob": "New York, US",
+            "pod": "New York, US",
+            "image": "images/emma-lewis.jpg",
+            "burialPlace": "West Point Cemetery, New York, US",
+            "bio": [
+              "Emma Lewis was the wife of Johnathan Lewis. She was a philanthropist and a social worker"
+            ],
+            "sub": [],
+            "child": []
+          }
+        ],
+        "child": [
+          {
+            "id": "16",
+            "level": 2,
+            "label": "Olivia Thompson",
+            "type": "Daughter",
+            "image": "images/olivia-thompson.jpg",
+            "dob": "06/21/1945",
+            "dod": "",
+            "pob": "New York, US",
+            "pod": "",
+            "burialPlace": "",
+            "bio": [
+              "Olivia Thompson was the daughter of Johnathan Lewis and Emma Lewis. She was a philanthropist and a social worker"
+            ],
+            "sub": [
+              {
+                "id": "17",
+                "level": 2,
+                "label": "Alexander Thompson",
+                "type": "Husband",
+                "dob": "01/25/1942",
+                "dod": "12/10/1997",
+                "pob": "New York, US",
+                "pod": "New York, US",
+                "image": "images/alexander-thompson.jpg",
+                "burialPlace": "West Point Cemetery, New York, US",
+                "bio": [
+                  "Alexander Thompson was the husband of Olivia Thompson. He was a philanthropist and a social worker"
+                ],
+                "sub": [],
+                "child": []
+              }
+            ],
+            "child": [
+              {
+                "id": "18",
+                "level": 3,
+                "label": "Mary Thompson",
+                "type": "Daughter",
+                "image": "images/mary-thompson.jpg",
+                "dob": "06/29/1965",
+                "dod": "",
+                "pob": "New York, US",
+                "pod": "",
+                "burialPlace": "",
+                "bio": [
+                  "Mary Thompson was the daughter of Olivia Thompson and Alexander Thompson. She was a philanthropist and a social worker"
+                ],
+                "sub": [],
+                "child": []
+              },
+              {
+                "id": "19",
+                "level": 3,
+                "label": "Charlotte Thompson",
+                "type": "Daughter",
+                "image": "images/charlotte-thompson.jpg",
+                "dob": "10/09/1972",
+                "dod": "",
+                "pob": "New York, US",
+                "pod": "",
+                "burialPlace": "",
+                "bio": [
+                  "Charlotte Thompson was the youngest daughter of Olivia Thompson and Alexander Thompson. She was the chairman of the John Lewis Partnership and the Waitrose supermarket chain."
+                ],
+                "sub": [],
+                "child": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "20",
+        "level": 1,
+        "label": "Michael Lewis",
+        "type": "Son",
+        "image": "images/michael-lewis.jpg",
+        "dob": "04/19/1915",
+        "dod": "12/30/1981",
+        "pob": "New York, US",
+        "pod": "New York, US",
+        "burialPlace": "West Point Cemetery, New York, US",
+        "bio": [
+          "Michael Lewis was the son of John Lewis and Mary Lewis. He was the first chairman of the John Lewis Partnership, which he co-founded with his father. He was also the first chairman of the Waitrose supermarket chain."
+        ],
+        "sub": [],
+        "child": []
+      },
+      {
+        "id": "21",
+        "level": 1,
+        "label": "Martha Taylor",
+        "type": "Daughter",
+        "image": "images/martha-taylor.jpg",
+        "dob": "11/05/1923",
+        "dod": "02/13/2003",
+        "pob": "New York, US",
+        "pod": "New York, US",
+        "burialPlace": "West Point Cemetery, New York, US",
+        "bio": [
+          "Martha Taylor was the daughter of John Lewis and Mary Lewis. He was the first chairman of the John Lewis Partnership, which he co-founded with his father. He was also the first chairman of the Waitrose supermarket chain."
+        ],
+        "sub": [
+          {
+            "id": "22",
+            "label": "Robert Taylor",
+            "type": "Husband",
+            "level": 1,
+            "dob": "01/20/1920",
+            "dod": "12/10/1997",
+            "pob": "New York, US",
+            "pod": "New York, US",
+            "image": "images/robert-taylor.jpg",
+            "burialPlace": "West Point Cemetery, New York, US",
+            "bio": [
+              "Robert Taylor was the husband of Martha Taylor. He was a philanthropist and a social worker"
+            ],
+            "sub": [],
+            "child": []
+          }
+        ],
+        "child": [
+          {
+            "id": "23",
+            "label": "Lucy Taylor",
+            "type": "Daughter",
+            "level": 2,
+            "dob": "06/23/1964",
+            "dod": "",
+            "image": "images/lucy-taylor.jpg",
+            "pob": "New York, US",
+            "pod": "",
+            "burialPlace": "",
+            "bio": [
+              "Lucy Taylor was the daughter of Martha Taylor and Robert Taylor. She was a philanthropist and a social worker"
+            ],
+            "sub": [],
+            "child": []
+          }
+        ]
+      }
+    ]
+  }
+]
