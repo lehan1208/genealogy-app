@@ -91,7 +91,7 @@ export default function BioInfo(): React.JSX.Element {
             </Grid>
           </Grid>
 
-          {renderImgList.length > 0 && (
+          {renderImgList?.length > 0 && (
             <ImageList sx={{marginTop: "50px"}} gap={10} rowHeight={161} cols={10} className="h-[190px] items-center overflow-y-hidden">
               {renderImgList.map((item) => (
                 <ImageListItem key={item.image} sx={{width: "161px"}}>

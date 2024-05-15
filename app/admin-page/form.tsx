@@ -98,11 +98,11 @@ export default function Form({memberInfo, list, familyTree}: {
         return {...node, ...data}
       }
 
-      if (node.child && node.child.length > 0) {
+      if (node.child && node.child?.length > 0) {
         node.child = node.child.map((child) => updateMemberInfo(child))
       }
 
-      if (node.sub && node.sub.length > 0) {
+      if (node.sub && node.sub?.length > 0) {
         node.sub = node.sub.map((sub) => updateMemberInfo(sub))
       }
       return node

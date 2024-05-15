@@ -130,7 +130,7 @@ export function TreeNode({
               onClick={() => {
                 handleExpandClick ? handleExpandClick(item) : null
                 setIsChildVisible(!isChildVisible)
-                if (handleShowItemChild && item.child.length > 0) {
+                if (handleShowItemChild && item.child?.length > 0) {
                   handleShowItemChild(item)
                 }
               }}
@@ -146,16 +146,16 @@ export function TreeNode({
           </Box>
         </span>
         </a>
-        {item.sub.length > 0 &&
+        {item.sub?.length > 0 &&
           <TreeNode
             handleShowItemChild={handleShowItemChild}
             visibleChildMap={visibleChildMap} handleExpandClick={handleExpandClick} data={item.sub}
             key={index}
           />
         }
-        {!(visibleChildMap) || visibleChildMap[item.id] && item.child && item.child.length > 0 && (
+        {!(visibleChildMap) || visibleChildMap[item.id] && item.child && item.child?.length > 0 && (
           <ul>
-            {item.child.map((childItem: any) => {
+            {item.child?.map((childItem: any) => {
               return (
                 <li key={childItem.id}>
                   <TreeNode
@@ -173,7 +173,7 @@ export function TreeNode({
 
   return (
     <>
-      {data.length > 0 && data?.map((item: any, index: number) => {
+      {data?.length > 0 && data?.map((item: any, index: number) => {
         return (
           <>
             {renderNodeItem(item, index)}

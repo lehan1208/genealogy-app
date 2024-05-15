@@ -99,7 +99,7 @@ export default function TreeView({getMemberInfo, familyTree = []}: {getMemberInf
   }
 
   function findItemById(id:string | null, array:any[]) {
-    if (!id || !array.length) return null
+    if (!id || !array?.length) return null
     for (const item of array) {
       if (item.id == id) {
         return item;
