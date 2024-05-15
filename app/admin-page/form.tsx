@@ -38,7 +38,6 @@ export default function Form({memberInfo, list, familyTree}: {
   const {register, getValues, reset, setValue, handleSubmit, control} = useForm();
   const [isNew, setIsNew] = useState(false)
   const [avatar, setAvatar] = useState<string | ArrayBuffer | null>(null);
-  console.log("CHECK familyTree :=>>>>>>) ", familyTree);
 
   useEffect(() => {
     setValue("name", memberInfo.label)
@@ -85,7 +84,6 @@ export default function Form({memberInfo, list, familyTree}: {
       if (isNew && node.id == data.relateTo) {
         if (["Wife", "Ex-Wife", "Husband"].includes(data.type)) {
           node.sub = node.sub ? [...node.sub, data] : [data];
-          console.log("CHECK node.sub :=>>>>>>) ", node.sub);
         } else {
           node.child = node.child ? [...node.child, data] : [data];
         }

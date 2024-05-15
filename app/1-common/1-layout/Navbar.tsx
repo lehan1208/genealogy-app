@@ -13,6 +13,7 @@ const NAV_LINKS = [
   {name: "History", href: "#"},
   {name: "Blog", href: "#"},
   {name: "Galleries", href: "#"},
+  {name: "Admin", href: "/admin-page"},
 ];
 
 export default function Navbar() {

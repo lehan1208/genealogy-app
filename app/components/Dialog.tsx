@@ -32,14 +32,13 @@ export default function MemberTreeDialog({
     setOpen(false);
   };
 
-  console.log("CHECK data :=>>>>>>) ", data);
   return (
     <React.Fragment>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={isOpen}
-        fullScreen
+        fullWidth
       >
         <DialogTitle sx={{m: 0, p: 2}} id="customized-dialog-title">
           {`${data.label}'s Hierarchy`}
