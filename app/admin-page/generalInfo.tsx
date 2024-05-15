@@ -2,27 +2,25 @@
 
 import {Grid, Box, Paper} from "@mui/material";
 import TreeView from "@/app/admin-page/treeView";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {isNil} from "lodash";
 import Form from "@/app/admin-page/form";
+import {useMemberContext} from "@/app/1-common/3-context/member.context";
 
 export default function GeneralInfo() {
   const [memberInfo, setMemberInfo] = useState<any>({})
+  const {familyDataTree} = useMemberContext()
+
   const getMemberInfo = (data: any) => {
     if (!isNil(data)) {
       setMemberInfo(data)
     }
   }
-  let familyTree :any = null
-  if (typeof window !== 'undefined') {
-     familyTree = JSON.parse(localStorage.getItem("familyData") || "[]")
-  }
-
 
   let result:any[] = [];
 
   const convertArray = (data:any[]) => {
-    data.forEach(item => {
+    data?.forEach(item => {
       result.push({
         id: item.id.toString(),
         label: item.name || item.label,
@@ -36,16 +34,16 @@ export default function GeneralInfo() {
     });
   };
 
-  convertArray(familyTree);
+  convertArray(familyDataTree|| []);
 
   return (
     <Box sx={{ flexGrow: 1 }} marginTop={3}>
       <Grid container spacing={1} className="">
         <Grid item xs={3} className='h-[550px] overflow-auto'>
-          <TreeView getMemberInfo={getMemberInfo} familyTree={familyTree}/>
+          <TreeView getMemberInfo={getMemberInfo} familyTree={familyDataTree}/>
         </Grid>
         <Grid item xs={9} className='h-[550px]'>
-          <Form memberInfo={memberInfo} list={result} familyTree={familyTree}/>
+          <Form memberInfo={memberInfo} list={result} familyTree={familyDataTree}/>
         </Grid>
       </Grid>
     </Box>

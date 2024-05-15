@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import dayjs from "dayjs";
 import Toastify from "toastify-js";
 import NumberUtils from "@/app/1-common/2-utils/number.util";
+import {isNil} from "lodash";
 
 interface MemberInfoProps {
   id: string;
@@ -38,6 +39,12 @@ export default function Form({memberInfo, list, familyTree}: {
   const {register, getValues, reset, setValue, handleSubmit, control} = useForm();
   const [isNew, setIsNew] = useState(false)
   const [avatar, setAvatar] = useState<string | ArrayBuffer | null>(null);
+
+  useEffect(() => {
+    if (!isNil(memberInfo)) {
+      setIsNew(false)
+    }
+  }, [JSON.stringify(memberInfo)]);
 
   useEffect(() => {
     setValue("name", memberInfo.label)
@@ -330,6 +337,7 @@ export default function Form({memberInfo, list, familyTree}: {
             <Button
               type="button"
               fullWidth
+              disabled={isNew}
               variant="outlined"
               color="primary"
               className="w-[150px]"

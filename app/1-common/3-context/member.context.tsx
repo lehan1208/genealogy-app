@@ -23,14 +23,20 @@ const MemberProvider = ({children}: { children: React.ReactNode }) => {
     pob: "New York, US",
     pod: "New York, US",
   })
-  const familyMembers = JSON.parse(JSON.stringify(familyData));
-
+  const [familyDataTree, setFamilyDataTree] = useState([])
   useEffect(() => {
-    storeData(familyData)
+    const familyMembers = JSON.parse(JSON.stringify(familyData));
+    const storedFamilyData = localStorage.getItem("familyData");
+    // @ts-ignore
+    setFamilyDataTree(JSON.parse(storedFamilyData))
+
+    if (!storedFamilyData) {
+      localStorage.setItem("familyData", JSON.stringify(familyMembers));
+    }
   }, []);
 
   return (
-    <MemberContext.Provider value={{memberInfo, setMemberInfo}}>
+    <MemberContext.Provider value={{memberInfo, setMemberInfo, familyDataTree}}>
       {children}
     </MemberContext.Provider>
   )

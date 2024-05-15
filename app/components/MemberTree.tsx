@@ -1,9 +1,9 @@
 "use client"
 import * as React from "react";
-import {Fragment, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {Button, Card, CardContent, CardMedia, Paper, Typography} from "@mui/material";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import {isEmpty} from "lodash";
+import {isEmpty, isNil} from "lodash";
 import {useMemberContext} from "@/app/1-common/3-context/member.context";
 import DateTimeUtils from "@/app/1-common/2-utils/date.util";
 import Box from "@mui/material/Box";
@@ -35,10 +35,21 @@ interface MemberInfoProps {
 }
 
 // @ts-ignore
-export default function MemberTree({data, key}: { data: any, key?: number | string }) {
+export default function MemberTree({data, key}: {data?:any ,key?: number | string }) {
+
   const [memberSelected, setMemberSelected] = useState<any>({})
   const [isShowDialog, setIsShowDialog] = useState(false)
   const [visibleChildMap, setVisibleChildMap] = useState<{ [key: string]: boolean }>({});
+  const [dataTree, setDataTree] = useState([])
+  const {familyDataTree} = useMemberContext()
+
+  useEffect(() => {
+    if (!isNil(data)) {
+      setDataTree(data)
+    } else {
+      setDataTree(familyDataTree)
+    }
+  }, [JSON.stringify(data), JSON.stringify(familyDataTree)]);
 
   const handleExpandClick = (item: any) => {
     // setMemberSelected(item)
@@ -57,10 +68,10 @@ export default function MemberTree({data, key}: { data: any, key?: number | stri
           <li>
             <TreeNode
               handleShowItemChild={handleShowItemChild}
-              visibleChildMap={visibleChildMap} handleExpandClick={handleExpandClick} data={data} key={key}/>
+              visibleChildMap={visibleChildMap} handleExpandClick={handleExpandClick} data={dataTree} key={key}/>
             {/*render children*/}
             {
-              data?.map((item: any, index: number) => {
+              dataTree?.map((item: any, index: number) => {
                 return (
                   <ul key={index}>
                     <li>
@@ -71,7 +82,9 @@ export default function MemberTree({data, key}: { data: any, key?: number | stri
                     </li>
                     <MemberTreeDialog
                       isOpen={isShowDialog}
-                      setOpen={() => setIsShowDialog(!isShowDialog)}
+                      setOpen={(e) => {
+                        setIsShowDialog(e)
+                      }}
                       data={memberSelected}
                     />
                   </ul>

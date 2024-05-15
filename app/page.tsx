@@ -8,17 +8,13 @@ import MemberTree from "@/app/components/MemberTree";
 import MemberProvider, {useMemberContext} from "@/app/1-common/3-context/member.context";
 
 export default function Home() {
-  const {memberInfo, setMemberInfo} = useMemberContext()
-  const familyMembers = JSON.parse(JSON.stringify(familyData));
-  const familyTreeData = JSON.parse(localStorage.getItem("familyData") || "[]")
-  setMemberInfo(familyTreeData)
 
   return (
     <MemberProvider>
       <Box className="h-screen">
         <GeneralInfo/>
-        <BioInfo data={familyMembers}/>
-        <MemberTree data={familyTreeData}/>
+        <BioInfo/>
+        <MemberTree />
         <Footer/>
       </Box>
     </MemberProvider>

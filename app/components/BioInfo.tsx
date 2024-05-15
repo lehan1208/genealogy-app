@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import {UnfoldLess, UnfoldMore} from "@mui/icons-material";
 import {useMemberContext} from "@/app/1-common/3-context/member.context";
 
-export default function BioInfo(props: any): React.JSX.Element {
+export default function BioInfo(): React.JSX.Element {
   const [renderImgList, setRenderImgList] = useState<any[]>([])
   const [isShowBio, setIsShowBio] = useState<boolean>(false)
 

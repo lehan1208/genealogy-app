@@ -53,7 +53,7 @@ function TransitionComponent(props: TransitionProps) {
   );
 }
 
-export default function TreeView({getMemberInfo, familyTree}: {getMemberInfo: (data: any) => void, familyTree: any[]}, ) {
+export default function TreeView({getMemberInfo, familyTree = []}: {getMemberInfo: (data: any) => void, familyTree: any[]}, ) {
   const [lastSelectedItem, setLastSelectedItem] = React.useState<string | null>(null);
   const [treeData, setTreeData] = useState<any[]>([])
 
