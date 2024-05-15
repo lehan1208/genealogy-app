@@ -19,12 +19,12 @@ export default function BasicInfo(): React.JSX.Element {
           }
         }}
       >
-        <Link underline="hover" color="inherit" href="#">
+        <Link underline="hover" color="white" href="#">
           <Typography color="inherit" variant="h6">HOME</Typography>
         </Link>
         <Link
           underline="hover"
-          color="inherit"
+          color="white"
           href="#"
         >
           <Typography color="inherit" variant="h6">FAMILY</Typography>

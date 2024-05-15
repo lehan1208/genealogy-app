@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react";
+import {storeData} from "@/app/1-common/2-utils/localStorage.util";
+import familyData from "@/app/data/familyData.json";
 
 const MemberContext = React.createContext<any>({
   memberInfo: {},
@@ -21,6 +23,11 @@ const MemberProvider = ({children}: { children: React.ReactNode }) => {
     pob: "New York, US",
     pod: "New York, US",
   })
+  const familyMembers = JSON.parse(JSON.stringify(familyData));
+
+  useEffect(() => {
+    storeData(familyData)
+  }, []);
 
   return (
     <MemberContext.Provider value={{memberInfo, setMemberInfo}}>

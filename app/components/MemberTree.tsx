@@ -35,7 +35,7 @@ interface MemberInfoProps {
 }
 
 // @ts-ignore
-export default function MemberTree({data, key}: { data: any[], key?: number | string }) {
+export default function MemberTree({data, key}: { data: any, key?: number | string }) {
   const [memberSelected, setMemberSelected] = useState<any>({})
   const [isShowDialog, setIsShowDialog] = useState(false)
   const [visibleChildMap, setVisibleChildMap] = useState<{ [key: string]: boolean }>({});
@@ -46,7 +46,6 @@ export default function MemberTree({data, key}: { data: any[], key?: number | st
   };
 
   const handleShowItemChild = (item: string) => {
-  console.log("CHECK item :=>>>>>>) ", item);
     setMemberSelected(item)
     setIsShowDialog(true)
   };
@@ -61,7 +60,7 @@ export default function MemberTree({data, key}: { data: any[], key?: number | st
               visibleChildMap={visibleChildMap} handleExpandClick={handleExpandClick} data={data} key={key}/>
             {/*render children*/}
             {
-              data.map((item: any, index: number) => {
+              data?.map((item: any, index: number) => {
                 return (
                   <ul key={index}>
                     <li>
@@ -108,7 +107,7 @@ export function TreeNode({
           <img src={item.image} alt={item.label}/>
           <span>
           <span>{item.label}</span>
-          <p className="block mb-2">{`(${item.dob} - ${item.dob ? item.dob : ""})`}</p>
+          <p className="block mb-2">{`(${DateTimeUtils.formatDate(item.dob)} - ${item.dod ? DateTimeUtils.formatDate(item.dod) : "Present"})`}</p>
           <Box display="flex" gap={10}>
             <button
               aria-label="hierarchy"
@@ -118,7 +117,7 @@ export function TreeNode({
               onClick={() => {
                 handleExpandClick ? handleExpandClick(item) : null
                 setIsChildVisible(!isChildVisible)
-                if (handleShowItemChild) {
+                if (handleShowItemChild && item.child.length > 0) {
                   handleShowItemChild(item)
                 }
               }}
