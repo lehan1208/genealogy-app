@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import Toastify from "toastify-js";
 import NumberUtils from "@/app/1-common/2-utils/number.util";
 import {isNil} from "lodash";
+import {useMemberContext} from "@/app/1-common/3-context/member.context";
 
 interface MemberInfoProps {
   id: string;
@@ -21,7 +22,7 @@ interface MemberInfoProps {
   burialPlace: string;
   bio: string[];
   level?: number;
-  child?: MemberInfoProps[];
+  children?: MemberInfoProps[];
   sub?: MemberInfoProps[];
 }
 
@@ -39,6 +40,8 @@ export default function Form({memberInfo, list, familyTree}: {
   const {register, getValues, reset, setValue, handleSubmit, control} = useForm();
   const [isNew, setIsNew] = useState(false)
   const [avatar, setAvatar] = useState<string | ArrayBuffer | null>(null);
+
+  const {setFamilyDataTree} = useMemberContext()
 
   useEffect(() => {
     if (!isNil(memberInfo)) {
@@ -69,8 +72,8 @@ export default function Form({memberInfo, list, familyTree}: {
       dod: data.dod ? dayjs(data.dod).format("MM/DD/YYYY") : null,
       bio: data.bio.split(". "),
       id: isNew ? NumberUtils.uuid() : memberInfo.id,
-      sub: data?.sub || [],
-      child: data?.child || [],
+      sub: isNew ? [] : memberInfo?.sub,
+      children: isNew ? [] : memberInfo?.children,
     }
     console.log("CHECK payload :=>>>>>>) ", payload);
     updateLocalStorageData(payload, familyTree)
@@ -92,14 +95,14 @@ export default function Form({memberInfo, list, familyTree}: {
         if (["Wife", "Ex-Wife", "Husband"].includes(data.type)) {
           node.sub = node.sub ? [...node.sub, data] : [data];
         } else {
-          node.child = node.child ? [...node.child, data] : [data];
+          node.children = node.children ? [...node.children, data] : [data];
         }
       } else if (node.id == memberInfo.id) {
         return {...node, ...data}
       }
 
-      if (node.child && node.child?.length > 0) {
-        node.child = node.child.map((child) => updateMemberInfo(child))
+      if (node.children && node.children?.length > 0) {
+        node.children = node.children.map((child) => updateMemberInfo(child))
       }
 
       if (node.sub && node.sub?.length > 0) {
@@ -109,8 +112,9 @@ export default function Form({memberInfo, list, familyTree}: {
     }
 
     const updatedFamilyTree = familyTree.map(updateMemberInfo)
-    console.log("CHECK updatedFamilyTree :=>>>>>>) ", updatedFamilyTree);
+    console.log("CHECK save to localStorage :=>>>>>>) ", updatedFamilyTree);
     localStorage.setItem("familyData", JSON.stringify(updatedFamilyTree))
+    setFamilyDataTree(updatedFamilyTree)
     setIsNew(false)
     setAvatar(null)
     reset()

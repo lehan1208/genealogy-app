@@ -1,12 +1,13 @@
-'use client'
+"use client"
 
 import Image from "next/image";
 import Logo from "@/public/logo.svg";
 import Link from "next/link";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import {Box} from "@mui/system";
-import {useState} from "react";
-
+import {useEffect, useState} from "react";
+import { useSearchParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 const NAV_LINKS = [
   {name: "Home", href: "/"},
   {name: "Family", href: "#"},
@@ -21,6 +22,16 @@ export default function Navbar() {
   const onClickNav = (name: string) => {
     setIsActiveLink(name)
   }
+  const pathname = usePathname();
+
+  useEffect(() => {
+    NAV_LINKS.map(link => {
+      if (link.href === pathname) {
+        setIsActiveLink(link.name)
+      }
+    })
+  }, [pathname]);
+
   return (
     <Box className="flex h-[80px] px-[60px] items-center justify-between border-b border-solid border-b-gray-500">
       <div>

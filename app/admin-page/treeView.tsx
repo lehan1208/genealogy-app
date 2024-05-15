@@ -9,35 +9,6 @@ import {Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useEffect, useState} from "react";
 
-const ITEMS: TreeViewBaseItem[] = [
-  {
-    id: "1",
-    label: "Main",
-    children: [
-      {id: "2", label: "Hello"},
-      {
-        id: "3",
-        label: "Subtree with children",
-        children: [
-          {id: "6", label: "Hello"},
-          {
-            id: "7",
-            label: "Sub-subtree with children",
-            children: [
-              {id: "9", label: "Child 1"},
-              {id: "10", label: "Child 2"},
-              {id: "11", label: "Child 3"},
-            ],
-          },
-          {id: "8", label: "Hello"},
-        ],
-      },
-      {id: "4", label: "World"},
-      {id: "5", label: "Something something"},
-    ],
-  },
-];
-
 function TransitionComponent(props: TransitionProps) {
   const style = useSpring({
     to: {
@@ -72,7 +43,7 @@ export default function TreeView({getMemberInfo, familyTree = []}: {getMemberInf
     return array.map(item => {
       const newItem = {
         id: item.id.toString(),
-        label: item.name || item.label,
+        label: item.name || item?.label,
         ...(item.image && {image: item.image}),
         ...(item.dob && {dob: item.dob}),
         ...(item.dod && {dod: item.dod}),
@@ -83,15 +54,15 @@ export default function TreeView({getMemberInfo, familyTree = []}: {getMemberInf
         ...(item.level && {level: item.level}),
         ...(item.type && {type: item.type}),
       }
-      if (item.sub || item.child) {
+      if (item.sub || item.children) {
         newItem.children = [];
         newItem.sub = [];
         if (item.sub) {
           newItem.children = newItem.children.concat(convertArray(item.sub));
           newItem.sub = newItem.sub.concat(convertArray(item.sub));
         }
-        if (item.child) {
-          newItem.children = newItem.children.concat(convertArray(item.child));
+        if (item.children) {
+          newItem.children = newItem.children.concat(convertArray(item.children));
         }
       }
       return newItem;
@@ -99,7 +70,7 @@ export default function TreeView({getMemberInfo, familyTree = []}: {getMemberInf
   }
 
   function findItemById(id:string | null, array:any[]) {
-    if (!id || !array?.length) return null
+    if (!id) return null
     for (const item of array) {
       if (item.id == id) {
         return item;
@@ -110,13 +81,20 @@ export default function TreeView({getMemberInfo, familyTree = []}: {getMemberInf
           return foundInChildren;
         }
       }
+      if (item.sub) {
+        const foundInSub:any = findItemById(id, item.sub);
+        if (foundInSub) {
+          return foundInSub;
+        }
+      }
     }
     return null;
   }
 
   useEffect(() => {
     if (lastSelectedItem) {
-      getMemberInfo(findItemById(lastSelectedItem, newArray))
+      console.log("CHECK findItemById(lastSelectedItem, familyTree) :=>>>>>>) ", findItemById(lastSelectedItem, familyTree));
+      getMemberInfo(findItemById(lastSelectedItem, familyTree))
     }
   }, [lastSelectedItem]);
 

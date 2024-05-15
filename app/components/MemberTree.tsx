@@ -1,7 +1,7 @@
 "use client"
 import * as React from "react";
 import {Fragment, useEffect, useState} from "react";
-import {Button, Card, CardContent, CardMedia, Paper, Typography} from "@mui/material";
+import {Button} from "@mui/material";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import {isEmpty, isNil} from "lodash";
 import {useMemberContext} from "@/app/1-common/3-context/member.context";
@@ -10,28 +10,9 @@ import Box from "@mui/material/Box";
 import MemberTreeDialog from "@/app/components/Dialog";
 
 interface CardItemProps {
-  handleExpandClick?: (item: any) => void,
   data?: any;
   key?: string | number;
   handleShowItemChild?: (item: any) => void;
-  visibleChildMap?: { [key: string]: boolean };
-}
-
-interface MemberInfoProps {
-  id: number;
-  level: number;
-  name: string;
-  type: string;
-  image: string;
-  dob: string;
-  dod: string;
-  pob: string;
-  pod: string;
-  burialPlace: string;
-  bio: [];
-  child: [];
-  sub: [];
-  data?: any;
 }
 
 // @ts-ignore
@@ -39,7 +20,6 @@ export default function MemberTree({data, key}: {data?:any ,key?: number | strin
 
   const [memberSelected, setMemberSelected] = useState<any>({})
   const [isShowDialog, setIsShowDialog] = useState(false)
-  const [visibleChildMap, setVisibleChildMap] = useState<{ [key: string]: boolean }>({});
   const [dataTree, setDataTree] = useState([])
   const {familyDataTree} = useMemberContext()
 
@@ -50,11 +30,6 @@ export default function MemberTree({data, key}: {data?:any ,key?: number | strin
       setDataTree(familyDataTree)
     }
   }, [JSON.stringify(data), JSON.stringify(familyDataTree)]);
-
-  const handleExpandClick = (item: any) => {
-    // setMemberSelected(item)
-
-  };
 
   const handleShowItemChild = (item: string) => {
     setMemberSelected(item)
@@ -68,8 +43,8 @@ export default function MemberTree({data, key}: {data?:any ,key?: number | strin
           <li>
             <TreeNode
               handleShowItemChild={handleShowItemChild}
-              visibleChildMap={visibleChildMap} handleExpandClick={handleExpandClick} data={dataTree} key={key}/>
-            {/*render children*/}
+              data={dataTree} key={key}
+            />
             {
               dataTree?.map((item: any, index: number) => {
                 return (
@@ -77,8 +52,7 @@ export default function MemberTree({data, key}: {data?:any ,key?: number | strin
                     <li>
                       <TreeNode
                         handleShowItemChild={handleShowItemChild}
-                        visibleChildMap={visibleChildMap} handleExpandClick={handleExpandClick}
-                        data={item.child} key={index}/>
+                        data={item.children} key={index}/>
                     </li>
                     <MemberTreeDialog
                       isOpen={isShowDialog}
@@ -100,14 +74,11 @@ export default function MemberTree({data, key}: {data?:any ,key?: number | strin
 }
 
 export function TreeNode({
-                           handleExpandClick,
                            handleShowItemChild,
-                           visibleChildMap,
                            data,
-                           key,
                          }: CardItemProps) {
   const [isChildVisible, setIsChildVisible] = useState(false)
-  const {memberInfo, setMemberInfo} = useMemberContext()
+  const {setMemberInfo} = useMemberContext()
   const handleOnClickMember = (e: any, item: any) => {
     e.preventDefault()
     setMemberInfo(item)
@@ -125,12 +96,11 @@ export function TreeNode({
             <button
               aria-label="hierarchy"
               className={`border border-solid h-[40px] w-[40px] rounded-full mx-auto border-[#d8220c] text-[#d8220c]
-                ${!isEmpty(item.child) ? "" : "hidden"}
+                ${!isEmpty(item.children) ? "" : "hidden"}
               `}
               onClick={() => {
-                handleExpandClick ? handleExpandClick(item) : null
                 setIsChildVisible(!isChildVisible)
-                if (handleShowItemChild && item.child?.length > 0) {
+                if (handleShowItemChild && item.children?.length > 0) {
                   handleShowItemChild(item)
                 }
               }}
@@ -149,24 +119,10 @@ export function TreeNode({
         {item.sub?.length > 0 &&
           <TreeNode
             handleShowItemChild={handleShowItemChild}
-            visibleChildMap={visibleChildMap} handleExpandClick={handleExpandClick} data={item.sub}
+            data={item.sub}
             key={index}
           />
         }
-        {!(visibleChildMap) || visibleChildMap[item.id] && item.child && item.child?.length > 0 && (
-          <ul>
-            {item.child?.map((childItem: any) => {
-              return (
-                <li key={childItem.id}>
-                  <TreeNode
-                    handleExpandClick={handleExpandClick}
-                    handleShowItemChild={handleShowItemChild} visibleChildMap={visibleChildMap}
-                    data={childItem} key={childItem.id}/>
-                </li>
-              )
-            })}
-          </ul>
-        )}
       </Fragment>
     )
   }

@@ -22,7 +22,7 @@ export default function BioInfo(): React.JSX.Element {
           image: member.image,
         })
       })
-      data.child?.forEach((member: any) => {
+      data.children?.forEach((member: any) => {
         return arr.push({
           name: member.name,
           image: member.image,

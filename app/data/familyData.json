@@ -30,7 +30,7 @@
           "Mary Lewis was the wife of John Lewis. She was a philanthropist and a social worker"
         ],
         "sub": [],
-        "child": []
+        "children": []
       },
       {
         "id": "3",
@@ -47,10 +47,10 @@
           "Elizabeth Collins was the first wife of John Lewis. She was a social worker and a philanthropist"
         ],
         "sub": [],
-        "child": []
+        "children": []
       }
     ],
-    "child": [
+    "children": [
       {
         "id": "4",
         "level": 1,
@@ -81,10 +81,10 @@
               "Barbara Lewis was the wife of Steven Lewis. She was a philanthropist and a social worker"
             ],
             "sub": [],
-            "child": []
+            "children": []
           }
         ],
-        "child": [
+        "children": [
           {
             "id": "6",
             "level": 2,
@@ -115,10 +115,10 @@
                   "Rose Lewis was the wife of James Lewis. She was a philanthropist and a social worker"
                 ],
                 "sub": [],
-                "child": []
+                "children": []
               }
             ],
-            "child": [
+            "children": [
               {
                 "id": "10",
                 "level": 3,
@@ -134,7 +134,7 @@
                   "Lily Adam was the daughter of James Lewis and Rose Lewis. She was a philanthropist and a social worker"
                 ],
                 "sub": [],
-                "child": []
+                "children": []
               },
               {
                 "id": "11",
@@ -151,7 +151,7 @@
                   "Vladimir Lewis was the youngest son of James Lewis and Rose Lewis. He was the chairman of the John Lewis Partnership and the Waitrose supermarket chain."
                 ],
                 "sub": [],
-                "child": []
+                "children": []
               }
             ]
           },
@@ -185,10 +185,10 @@
                   "John Adams was the husband of Anastasia Adams. He was a philanthropist and a social worker"
                 ],
                 "sub": [],
-                "child": []
+                "children": []
               }
             ],
-            "child": []
+            "children": []
           },
           {
             "id": "12",
@@ -205,7 +205,7 @@
               "William Lewis was the son of Steven Lewis and Barbara Lewis. He was the chairman of the John Lewis Partnership and the Waitrose supermarket chain."
             ],
             "sub": [],
-            "child": []
+            "children": []
           },
           {
             "id": "13",
@@ -222,7 +222,7 @@
               "Andrew Lewis was the youngest son of Steven Lewis and Barbara Lewis. He was the chairman of the John Lewis Partnership and the Waitrose supermarket chain."
             ],
             "sub": [],
-            "child": []
+            "children": []
           }
         ]
       },
@@ -256,10 +256,10 @@
               "Emma Lewis was the wife of Johnathan Lewis. She was a philanthropist and a social worker"
             ],
             "sub": [],
-            "child": []
+            "children": []
           }
         ],
-        "child": [
+        "children": [
           {
             "id": "16",
             "level": 2,
@@ -290,10 +290,10 @@
                   "Alexander Thompson was the husband of Olivia Thompson. He was a philanthropist and a social worker"
                 ],
                 "sub": [],
-                "child": []
+                "children": []
               }
             ],
-            "child": [
+            "children": [
               {
                 "id": "18",
                 "level": 3,
@@ -309,7 +309,7 @@
                   "Mary Thompson was the daughter of Olivia Thompson and Alexander Thompson. She was a philanthropist and a social worker"
                 ],
                 "sub": [],
-                "child": []
+                "children": []
               },
               {
                 "id": "19",
@@ -326,7 +326,7 @@
                   "Charlotte Thompson was the youngest daughter of Olivia Thompson and Alexander Thompson. She was the chairman of the John Lewis Partnership and the Waitrose supermarket chain."
                 ],
                 "sub": [],
-                "child": []
+                "children": []
               }
             ]
           }
@@ -347,7 +347,7 @@
           "Michael Lewis was the son of John Lewis and Mary Lewis. He was the first chairman of the John Lewis Partnership, which he co-founded with his father. He was also the first chairman of the Waitrose supermarket chain."
         ],
         "sub": [],
-        "child": []
+        "children": []
       },
       {
         "id": "21",
@@ -379,10 +379,10 @@
               "Robert Taylor was the husband of Martha Taylor. He was a philanthropist and a social worker"
             ],
             "sub": [],
-            "child": []
+            "children": []
           }
         ],
-        "child": [
+        "children": [
           {
             "id": "23",
             "label": "Lucy Taylor",
@@ -398,7 +398,7 @@
               "Lucy Taylor was the daughter of Martha Taylor and Robert Taylor. She was a philanthropist and a social worker"
             ],
             "sub": [],
-            "child": []
+            "children": []
           }
         ]
       }

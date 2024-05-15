@@ -28,8 +28,8 @@ export default function GeneralInfo() {
       if (item.sub) {
         convertArray(item.sub);
       }
-      if (item.child) {
-        convertArray(item.child);
+      if (item.children) {
+        convertArray(item.children);
       }
     });
   };

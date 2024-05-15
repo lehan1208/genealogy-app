@@ -14,7 +14,7 @@ const MemberProvider = ({children}: { children: React.ReactNode }) => {
     "id": "1",
     burialPlace: "Bayside Cemetery, New York, US",
     sub: [],
-    child: [],
+    children: [],
     dob: "08/07/1878",
     dod: "04/09/1923",
     image: "images/john-lewis.jpg",
@@ -36,7 +36,7 @@ const MemberProvider = ({children}: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <MemberContext.Provider value={{memberInfo, setMemberInfo, familyDataTree}}>
+    <MemberContext.Provider value={{memberInfo, setMemberInfo, familyDataTree, setFamilyDataTree}}>
       {children}
     </MemberContext.Provider>
   )
