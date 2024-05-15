@@ -5,6 +5,7 @@ import BioInfo from "@/app/components/BioInfo"
 import familyData from "./data/familyData.json";
 import Footer from "@/app/components/Footer";
 import MemberTree from "@/app/components/MemberTree";
+import MemberProvider from "@/app/1-common/3-context/member.context";
 
 export default function Home() {
   const familyMembers = JSON.parse(JSON.stringify(familyData));
@@ -13,11 +14,13 @@ export default function Home() {
   }
 
   return (
-    <Box className="h-screen">
-      <GeneralInfo/>
-      <BioInfo data={familyMembers}/>
-      <MemberTree data={familyMembers}/>
-      <Footer/>
-    </Box>
+    <MemberProvider>
+      <Box className="h-screen">
+        <GeneralInfo/>
+        <BioInfo data={familyMembers}/>
+        <MemberTree data={familyMembers}/>
+        <Footer/>
+      </Box>
+    </MemberProvider>
   );
 }

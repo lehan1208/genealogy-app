@@ -6,7 +6,7 @@ import {Avatar, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextFie
 import DatePicker from "react-datepicker";
 import dayjs from "dayjs";
 import Toastify from "toastify-js";
-import NumberUtils from "@/app/1-common/utils/number.util";
+import NumberUtils from "@/app/1-common/2-utils/number.util";
 
 interface MemberInfoProps {
   id: string;
@@ -85,6 +85,7 @@ export default function Form({memberInfo, list, familyTree}: {
       if (isNew && node.id == data.relateTo) {
         if (["Wife", "Ex-Wife", "Husband"].includes(data.type)) {
           node.sub = node.sub ? [...node.sub, data] : [data];
+          console.log("CHECK node.sub :=>>>>>>) ", node.sub);
         } else {
           node.child = node.child ? [...node.child, data] : [data];
         }
@@ -99,15 +100,15 @@ export default function Form({memberInfo, list, familyTree}: {
       if (node.sub && node.sub.length > 0) {
         node.sub = node.sub.map((sub) => updateMemberInfo(sub))
       }
-
       return node
     }
 
     const updatedFamilyTree = familyTree.map(updateMemberInfo)
     console.log("CHECK updatedFamilyTree :=>>>>>>) ", updatedFamilyTree);
-    setIsNew(false)
-    reset()
     localStorage.setItem("familyData", JSON.stringify(updatedFamilyTree))
+    setIsNew(false)
+    setAvatar(null)
+    reset()
   }
 
   const handleAvatarChange = (event: any) => {

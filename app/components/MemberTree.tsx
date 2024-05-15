@@ -4,11 +4,17 @@ import {Fragment, useState} from "react";
 import {Button, Card, CardContent, CardMedia, Paper, Typography} from "@mui/material";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import {isEmpty} from "lodash";
+import {useMemberContext} from "@/app/1-common/3-context/member.context";
+import DateTimeUtils from "@/app/1-common/2-utils/date.util";
+import Box from "@mui/material/Box";
+import MemberTreeDialog from "@/app/components/Dialog";
 
 interface CardItemProps {
-  isSelected: boolean,
-  handleExpandClick?: () => void,
-  data?: any
+  handleExpandClick?: (item: any) => void,
+  data?: any;
+  key?: string | number;
+  handleShowItemChild?: (item: any) => void;
+  visibleChildMap?: { [key: string]: boolean };
 }
 
 interface MemberInfoProps {
@@ -29,153 +35,139 @@ interface MemberInfoProps {
 }
 
 // @ts-ignore
-export default function MemberTree({data}) {
-  const [isSelected, setIsSelected] = useState<boolean>(false)
+export default function MemberTree({data, key}: { data: any[], key?: number | string }) {
+  const [memberSelected, setMemberSelected] = useState<any>({})
+  const [isShowDialog, setIsShowDialog] = useState(false)
+  const [visibleChildMap, setVisibleChildMap] = useState<{ [key: string]: boolean }>({});
 
-  const handleExpandClick = () => {
-    setIsSelected(!isSelected)
+  const handleExpandClick = (item: any) => {
+    // setMemberSelected(item)
+
   };
 
-  return (
-    <CardItem isSelected={isSelected} handleExpandClick={handleExpandClick} data={data}/>
-  );
-}
+  const handleShowItemChild = (item: string) => {
+  console.log("CHECK item :=>>>>>>) ", item);
+    setMemberSelected(item)
+    setIsShowDialog(true)
+  };
 
-export function CardItem({isSelected, handleExpandClick, data}: CardItemProps) {
   return (
     <div className="card-item">
       <nav className="tree">
         <ul>
           <li>
-            <a href="#" className="mr-4">
-              <img src="images/john-lewis.jpg" alt="john lewis"/>
-              <span>John Lewis
-                <p className="block">(January 1, 1980 - )</p>
-              </span>
-            </a>
-            <a href="#" className="mr-4">
-              <img src="images/john-lewis.jpg" alt="john lewis"/>
-              <span>John Lewis
-                <p className="block">(January 1, 1980 - )</p>
-              </span>
-            </a>
-            <a href="#" className="mr-4">
-              <img src="images/john-lewis.jpg" alt="john lewis"/>
-              <span>John Lewis
-                <p className="block">(January 1, 1980 - )</p>
-              </span>
-            </a>
-            <ul>
-              <li>
-                <a href="#">Lab</a>
-                <ul>
-                  <li>
-                    <a href="#">Code</a>
-                    <ul>
-                      <li>
-                        <a href="#">Html</a>
-                        <ul>
-                          <li>
-                            <a href="#">Css</a>
-                            <ul>
-                              <li>
-                                <a href="#">Jquery</a>
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="#">Graph</a>
-                    <ul>
-                      <li>
-                        <a href="#">Image</a>
-                        <ul>
-                          <li>
-                            <a href="#">Design</a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Blog</a>
-                <ul>
-                  <li>
-                    <a href="#">Category</a>
-                    <ul>
-                      <li>
-                        <a href="#">Code</a>
-                      </li>
-                      <li>
-                        <a href="#">Graph</a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">About</a>
-                <ul>
-                  <li>
-                    <a href="#">Vcard</a>
-
-                  </li>
-                  <li>
-                    <a href="#">Map</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+            <TreeNode
+              handleShowItemChild={handleShowItemChild}
+              visibleChildMap={visibleChildMap} handleExpandClick={handleExpandClick} data={data} key={key}/>
+            {/*render children*/}
+            {
+              data.map((item: any, index: number) => {
+                return (
+                  <ul key={index}>
+                    <li>
+                      <TreeNode
+                        handleShowItemChild={handleShowItemChild}
+                        visibleChildMap={visibleChildMap} handleExpandClick={handleExpandClick}
+                        data={item.child} key={index}/>
+                    </li>
+                    <MemberTreeDialog
+                      isOpen={isShowDialog}
+                      setOpen={() => setIsShowDialog(!isShowDialog)}
+                      data={memberSelected}
+                    />
+                  </ul>
+                )
+              })
+            }
           </li>
         </ul>
       </nav>
+
     </div>
-    // <div className="member-item">
-    //   <ul>
-    //     {data.map((item:any) => (
-    //       <Fragment key={item.id}>
-    //         <Paper elevation={0} className="w-4/5 mx-auto member-item-paper">
-    //           <Card sx={{maxWidth: 345}} className="">
-    //             <CardMedia
-    //               component="img"
-    //               height="194"
-    //               image={item.image}
-    //               alt={item.name}
-    //             />
-    //             <CardContent
-    //               className={`pb-0 flex flex-col justify-center items-center ${isSelected ? "bg-[#d8220c] text-white" : ""}`}>
-    //               <Typography variant="h5" paragraph className={`font-bold mx-auto mt-4 ${isSelected}`}>
-    //                 {item.name}
-    //               </Typography>
-    //               <Typography variant="subtitle1" paragraph>
-    //                 <span>({item.dob} - {item.dod})</span>
-    //               </Typography>
-    //               <Button
-    //                 aria-label="hierarchy"
-    //                 className={`bottom-[-1rem] border border-solid h-[66px] w-[66px] rounded-full
-    //             ${isSelected ? "border-[#fff] text-white" : "border-[#d8220c] text-[#d8220c]"}
-    //           `}
-    //                 onClick={handleExpandClick}
-    //               >
-    //                 <AccountTreeIcon
-    //                   onClick={() => console.log("2")}
-    //                   sx={{transform: "scaleX(-1) rotate(90deg)"}}
-    //                   className="text-[32px]"
-    //                 />
-    //               </Button>
-    //             </CardContent>
-    //           </Card>
-    //         </Paper>
-    //         {!isEmpty(item.child) && <CardItem isSelected={isSelected} handleExpandClick={handleExpandClick} data={item.child}/>}
-    //       </Fragment>
-    //       ))}
-    //   </ul>
-    //
-    // </div>
+  );
+}
+
+export function TreeNode({
+                           handleExpandClick,
+                           handleShowItemChild,
+                           visibleChildMap,
+                           data,
+                           key,
+                         }: CardItemProps) {
+  const [isChildVisible, setIsChildVisible] = useState(false)
+  const {memberInfo, setMemberInfo} = useMemberContext()
+  const handleOnClickMember = (e: any, item: any) => {
+    e.preventDefault()
+    setMemberInfo(item)
+  }
+
+  const renderNodeItem = (item: any, index: string | number) => {
+    return (
+      <Fragment>
+        <a key={index} href={"#"} className="mr-4" onClick={(e) => handleOnClickMember(e, item)}>
+          <img src={item.image} alt={item.label}/>
+          <span>
+          <span>{item.label}</span>
+          <p className="block mb-2">{`(${item.dob} - ${item.dob ? item.dob : ""})`}</p>
+          <Box display="flex" gap={10}>
+            <button
+              aria-label="hierarchy"
+              className={`border border-solid h-[40px] w-[40px] rounded-full mx-auto border-[#d8220c] text-[#d8220c]
+                ${!isEmpty(item.child) ? "" : "hidden"}
+              `}
+              onClick={() => {
+                handleExpandClick ? handleExpandClick(item) : null
+                setIsChildVisible(!isChildVisible)
+                if (handleShowItemChild) {
+                  handleShowItemChild(item)
+                }
+              }}
+            >
+            <AccountTreeIcon
+              sx={{transform: "scaleX(-1) rotate(90deg)"}}
+              className={`text-[20px] `}
+            />
+          </button>
+            {item.type !== "Root" && <Button sx={{marginLeft: "auto"}} variant="outlined" color="primary">
+              {item.type}
+            </Button>}
+          </Box>
+        </span>
+        </a>
+        {item.sub.length > 0 &&
+          <TreeNode
+            handleShowItemChild={handleShowItemChild}
+            visibleChildMap={visibleChildMap} handleExpandClick={handleExpandClick} data={item.sub}
+            key={index}
+          />
+        }
+        {!(visibleChildMap) || visibleChildMap[item.id] && item.child && item.child.length > 0 && (
+          <ul>
+            {item.child.map((childItem: any) => {
+              return (
+                <li key={childItem.id}>
+                  <TreeNode
+                    handleExpandClick={handleExpandClick}
+                    handleShowItemChild={handleShowItemChild} visibleChildMap={visibleChildMap}
+                    data={childItem} key={childItem.id}/>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+      </Fragment>
+    )
+  }
+
+  return (
+    <>
+      {data.length > 0 && data?.map((item: any, index: number) => {
+        return (
+          <>
+            {renderNodeItem(item, index)}
+          </>
+        )
+      })}
+    </>
   )
 }

@@ -4,8 +4,12 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import {Avatar, Link} from "@mui/material";
+import {useMemberContext} from "@/app/1-common/3-context/member.context";
+import dayjs from "dayjs";
+import DateTimeUtils from "@/app/1-common/2-utils/date.util";
 
 export default function BasicInfo(): React.JSX.Element {
+
   return (
     <div className="flex flex-col items-center justify-center my-12 p-8 text-white ">
       <Breadcrumbs aria-label="breadcrumb" className="text-white"
@@ -39,13 +43,7 @@ interface MemberProps {
 }
 
 export function MemberInfo(): React.JSX.Element {
-
-  const members: MemberProps = {
-    name: "John Lewis",
-    dob: "January 1, 1980",
-    dod: "",
-    avatarUrl: "images/john-lewis.jpg",
-  }
+  const {memberInfo} = useMemberContext()
 
   const calculateAge = (dob: string, dod: string) => {
     const dateOfBirth = new Date(dob);
@@ -59,20 +57,20 @@ export function MemberInfo(): React.JSX.Element {
     <div className="flex flex-row justify-center items-center gap-10 pt-10 z-[2]">
       <div className="avatar">
         <Avatar className="border-solid border-4 border-white"
-          alt={members.name}
-          src={members.avatarUrl}
+          alt={memberInfo?.label || memberInfo?.name}
+          src={memberInfo.image}
           sx={{width: 200, height: 200}}
         />
       </div>
       <div>
-        <Typography variant="h2" gutterBottom>
-          {members.name.toUpperCase()}
+        <Typography variant="h3" gutterBottom>
+          {memberInfo.label?.toUpperCase()}
         </Typography>
-        <Typography variant="h5" className="tracking-widest">
-          {`${members.dob} - ${members.dod || "Present"}`}
+        <Typography variant="h6" className="tracking-widest">
+          {`${DateTimeUtils.formatDate(memberInfo.dob)} - ${DateTimeUtils.formatDate(memberInfo.dod) || "Present"}`}
         </Typography>
-        <Typography variant="h5" className="tracking-widest">
-          {`Age ${calculateAge(members.dob, members.dod)}`}
+        <Typography variant="h6" className="tracking-widest">
+          {`(Age ${calculateAge(memberInfo.dob, memberInfo.dod)})`}
         </Typography>
       </div>
     </div>
