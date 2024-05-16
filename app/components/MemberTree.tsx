@@ -88,7 +88,7 @@ export function TreeNode({
     return (
       <Fragment>
         <a key={index} href={"#"} className="mr-4" onClick={(e) => handleOnClickMember(e, item)}>
-          <img src={item.image} alt={item.label}/>
+          <img src={item?.image || "images/no-avatar.png"} alt={item.label}/>
           <span>
           <span>{item.label}</span>
           <p className="block mb-2">{`(${DateTimeUtils.formatDate(item.dob)} - ${item.dod ? DateTimeUtils.formatDate(item.dod) : "Present"})`}</p>

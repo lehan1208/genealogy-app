@@ -35,7 +35,6 @@ export default function BioInfo(): React.JSX.Element {
 
   const renderBioContent = () => {
     if (!isNil(memberInfo)) {
-      // console.log("CHECK props.data :=>>>>>>) ", props.data);
       return (
         <div className="p-4 mb-[36px]">
           {memberInfo.bio?.map((p: string, i: number) => (

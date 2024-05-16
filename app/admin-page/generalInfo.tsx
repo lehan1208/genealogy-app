@@ -43,7 +43,7 @@ export default function GeneralInfo() {
           <TreeView getMemberInfo={getMemberInfo} familyTree={familyDataTree}/>
         </Grid>
         <Grid item xs={9} className='h-[550px]'>
-          <Form memberInfo={memberInfo} list={result} familyTree={familyDataTree}/>
+          <Form memberInfo={memberInfo} list={result} familyTree={familyDataTree} setMemberInfo={setMemberInfo}/>
         </Grid>
       </Grid>
     </Box>

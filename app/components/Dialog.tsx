@@ -29,7 +29,6 @@ export default function MemberTreeDialog({
     setOpen(false);
   };
 
-  console.log("CHECK data :=>>>>>>) ", data);
   return (
     <React.Fragment>
       <BootstrapDialog

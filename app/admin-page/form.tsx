@@ -2,12 +2,22 @@
 import React, {useEffect, useState} from "react";
 import {Controller, useForm} from "react-hook-form";
 import Box from "@mui/material/Box";
-import {Avatar, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {
+  Avatar,
+  Button, Checkbox,
+  FormControl, FormControlLabel,
+  FormHelperText,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import DatePicker from "react-datepicker";
 import dayjs from "dayjs";
 import Toastify from "toastify-js";
 import NumberUtils from "@/app/1-common/2-utils/number.util";
-import {isNil} from "lodash";
+import {isEmpty} from "lodash";
 import {useMemberContext} from "@/app/1-common/3-context/member.context";
 
 interface MemberInfoProps {
@@ -32,20 +42,23 @@ interface RelatedListProps {
 
 }
 
-export default function Form({memberInfo, list, familyTree}: {
+// @ts-ignore
+export default function Form({memberInfo, list, familyTree, setMemberInfo}: {
   memberInfo: MemberInfoProps,
   list: RelatedListProps[],
-  familyTree: MemberInfoProps[]
+  familyTree: MemberInfoProps[],
+  setMemberInfo: (data: any) => void
 }) {
-  const {register, getValues, reset, setValue, handleSubmit, control} = useForm();
-  const [isNew, setIsNew] = useState(false)
+  const {getValues, reset, setValue, handleSubmit, control, formState: {errors}} = useForm();
+  const [isEdit, setIsEdit] = useState(false)
   const [avatar, setAvatar] = useState<string | ArrayBuffer | null>(null);
+  const [onlyYear, setOnlyYear] = useState(false)
 
   const {setFamilyDataTree} = useMemberContext()
-
   useEffect(() => {
-    if (!isNil(memberInfo)) {
-      setIsNew(false)
+    if (!isEmpty(memberInfo)) {
+      setOnlyYear(!memberInfo?.dod?.includes("/"))
+      setIsEdit(true)
     }
   }, [JSON.stringify(memberInfo)]);
 
@@ -62,42 +75,50 @@ export default function Form({memberInfo, list, familyTree}: {
     setAvatar(memberInfo.image)
   }, [memberInfo])
 
+  const unSave = (data: any) => {
+    console.log("UNSAVE", data)
+  }
 
   const onSubmit = (data: any) => {
-    console.log(data);
     const payload = {
       ...data,
       label: data.name,
       dob: data.dob ? dayjs(data.dob).format("MM/DD/YYYY") : null,
-      dod: data.dod ? dayjs(data.dod).format("MM/DD/YYYY") : null,
-      bio: data.bio.split(". "),
-      id: isNew ? NumberUtils.uuid() : memberInfo.id,
-      sub: isNew ? [] : memberInfo?.sub,
-      children: isNew ? [] : memberInfo?.children,
+      dod: data.dod ? onlyYear ? data.dod?.toString() : dayjs(data.dod).format("MM/DD/YYYY") : null,
+      bio: data.bio?.split(". "),
+      id: !isEdit ? NumberUtils.uuid() : memberInfo.id,
+      sub: !isEdit ? [] : memberInfo?.sub,
+      children: !isEdit ? [] : memberInfo?.children,
     }
     console.log("CHECK payload :=>>>>>>) ", payload);
     updateLocalStorageData(payload, familyTree)
 
     Toastify({
-      text: `${isNew ? "New member has been added" : "Member has been updated"}`,
+      text: `${!isEdit ? "New member has been added" : "Member has been updated"}`,
       duration: 3000,
       gravity: "bottom",
       position: "right",
       style: {
-        background: "linear-gradient(to right, #00b09b, #96c93d)",
+        borderRadius: "4px",
+        fontFamily: "'Arial', sans-serif",
+        fontSize: "16px",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        background: "white",
+        borderLeft: "10px solid #96c93d",
+        color: "#000",
       },
     }).showToast();
   };
 
-  const updateLocalStorageData = (data: any, familyTree:MemberInfoProps[]) => {
-    const updateMemberInfo = (node:MemberInfoProps) => {
-      if (isNew && node.id == data.relateTo) {
+  const updateLocalStorageData = (data: any, familyTree: MemberInfoProps[]) => {
+    const updateMemberInfo = (node: MemberInfoProps) => {
+      if (!isEdit && node.id == data.relateTo) {
         if (["Wife", "Ex-Wife", "Husband"].includes(data.type)) {
           node.sub = node.sub ? [...node.sub, data] : [data];
         } else {
           node.children = node.children ? [...node.children, data] : [data];
         }
-      } else if (node.id == memberInfo.id) {
+      } else if (isEdit && node.id == memberInfo.id) {
         return {...node, ...data}
       }
 
@@ -115,9 +136,10 @@ export default function Form({memberInfo, list, familyTree}: {
     console.log("CHECK save to localStorage :=>>>>>>) ", updatedFamilyTree);
     localStorage.setItem("familyData", JSON.stringify(updatedFamilyTree))
     setFamilyDataTree(updatedFamilyTree)
-    setIsNew(false)
+    // setIsEdit(false)
     setAvatar(null)
     reset()
+    setOnlyYear(false)
   }
 
   const handleAvatarChange = (event: any) => {
@@ -134,7 +156,7 @@ export default function Form({memberInfo, list, familyTree}: {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{padding: "16px", mx: "auto"}}
+    <Box component="form" onSubmit={handleSubmit(onSubmit, unSave)} sx={{padding: "16px", mx: "auto"}}
          className="form-management">
       <Grid container spacing={2}>
         <Grid item xs={3}>
@@ -142,10 +164,13 @@ export default function Form({memberInfo, list, familyTree}: {
             name="name"
             control={control}
             defaultValue={memberInfo.label || ""}
+            rules={{required: "Name is required"}}
             render={({field}) => (
               <TextField
+                error={!!errors?.name}
                 label="Name"
                 fullWidth
+                helperText={errors?.name?.message as string || ""}
                 variant="standard"
                 {...field}
               />
@@ -158,8 +183,9 @@ export default function Form({memberInfo, list, familyTree}: {
             name="type"
             control={control}
             defaultValue={memberInfo.type || ""}
+            rules={isEdit ? {} : {required: "Type is required"}}
             render={({field}) => (
-              <FormControl fullWidth variant="outlined">
+              <FormControl fullWidth variant="outlined" error={!!errors?.type}>
                 <InputLabel>Type</InputLabel>
                 <Select
                   {...field}
@@ -170,6 +196,7 @@ export default function Form({memberInfo, list, familyTree}: {
                     <MenuItem key={item} value={item}>{item}</MenuItem>
                   ))}
                 </Select>
+                <FormHelperText>{(errors?.type?.message) as string || ""}</FormHelperText>
               </FormControl>
             )}
           />
@@ -180,6 +207,7 @@ export default function Form({memberInfo, list, familyTree}: {
             name="dob"
             control={control}
             defaultValue={null}
+            rules={{required: "Date of Birth is required"}}
             render={({field}) => (
               <DatePicker
                 className="w-full"
@@ -190,7 +218,15 @@ export default function Form({memberInfo, list, familyTree}: {
                   field.onChange(date)
                 }}
                 dateFormat="dd/MM/yyyy"
-                customInput={<TextField label="Date of birth" fullWidth variant="standard"/>}
+                customInput={
+                  <TextField
+                    label="Date of birth"
+                    fullWidth
+                    variant="standard"
+                    error={!!errors?.dob}
+                    helperText={errors?.dob?.message as string || ""}
+                  />
+                }
               />
             )}
           />
@@ -206,9 +242,40 @@ export default function Form({memberInfo, list, familyTree}: {
                 maxDate={new Date()}
                 placeholderText="Date of death"
                 selected={field.value}
-                onChange={(date) => field.onChange(date)}
-                dateFormat="dd/MM/yyyy"
-                customInput={<TextField label="Date of death" fullWidth variant="standard"/>}
+                onChange={(date) => {
+                  if (onlyYear) {
+                    const year = date ? date.getFullYear() : null;
+                    // field.onChange(year ? new Date(year, 0, 1) : null);
+                    field.onChange(year)
+                  } else {
+                    field.onChange(date);
+                  }
+                }}
+                dateFormat={onlyYear ? "yyyy" : "dd/MM/yyyy"}
+                showYearPicker={onlyYear}
+                customInput={
+                  <TextField
+                    label="Date of death"
+                    fullWidth
+                    variant="standard"
+                    sx={{marginBottom: "8px"}}
+                    InputProps={{
+                      startAdornment: (
+                        <FormControlLabel
+                          sx={{width: "inherit"}}
+                          control={
+                            <Checkbox
+                              sx={{padding: "0 4px 0 12px"}}
+                              checked={onlyYear}
+                              onChange={(e) => setOnlyYear(e.target.checked)}
+                            />
+                          }
+                          label="Year only"
+                        />
+                      ),
+                    }}
+                  />
+                }
               />
             )}
           />
@@ -219,9 +286,12 @@ export default function Form({memberInfo, list, familyTree}: {
             name="pob"
             control={control}
             defaultValue={memberInfo.pob || ""}
+            rules={{required: "Place of Birth is required"}}
             render={({field}) => (
               <TextField
+                error={!!errors?.pob}
                 label="Place of Birth"
+                helperText={errors?.pob?.message as string || ""}
                 fullWidth
                 variant="standard"
                 {...field}
@@ -246,23 +316,26 @@ export default function Form({memberInfo, list, familyTree}: {
           />
         </Grid>
 
-        {isNew && <Grid item xs={4}>
+        {!isEdit && <Grid item xs={4}>
           <Controller
             name="relateTo"
             control={control}
             defaultValue={""}
-            render={({field}) => isNew && (
-              <FormControl fullWidth variant="outlined">
-                <InputLabel>Relate To</InputLabel>
+            rules={!isEdit ? {required: "Please choose related person"} : {}}
+            render={({field}) => !isEdit && (
+              <FormControl fullWidth variant="outlined" error={!!errors?.relateTo}>
+                <InputLabel id="relateTo">Relate To</InputLabel>
                 <Select
                   {...field}
                   variant="standard"
                   label="Relate To"
+                  labelId="relateTo"
                 >
                   {list.map((item: any) => (
                     <MenuItem key={item.id} value={item.id}>{item.label}</MenuItem>
                   ))}
                 </Select>
+                <FormHelperText>{(errors?.relateTo?.message) as string || ""}</FormHelperText>
               </FormControl>
             )}
           />
@@ -289,13 +362,16 @@ export default function Form({memberInfo, list, familyTree}: {
             name="bio"
             control={control}
             defaultValue={memberInfo.bio?.join() || ""}
+            rules={{required: "Bio is required"}}
             render={(ctrl) =>
               <TextField
                 label="Bio"
+                error={!!errors?.bio}
                 fullWidth
                 variant="standard"
                 multiline
                 rows={4}
+                helperText={errors?.bio?.message as string || ""}
                 defaultValue={""}
                 {...ctrl.field}
               />
@@ -308,7 +384,7 @@ export default function Form({memberInfo, list, familyTree}: {
             name="image"
             defaultValue={memberInfo?.image || ""}
             control={control}
-            render={(field) => (<>
+            render={() => (<>
               {(avatar || memberInfo?.image) && (
                 <Avatar
                   src={avatar || getValues("image")}
@@ -336,17 +412,18 @@ export default function Form({memberInfo, list, familyTree}: {
 
         </Grid>
 
-        <Grid item xs={6}>
-          <Box className="flex gap-4">
+        <Grid item xs={12}>
+          <Box className="flex gap-10">
             <Button
               type="button"
               fullWidth
-              disabled={isNew}
+              disabled={!isEdit}
               variant="outlined"
               color="primary"
               className="w-[150px]"
               onClick={() => {
-                setIsNew(true)
+                // setIsNew(true)
+                setIsEdit(false)
                 reset({
                   name: "",
                   type: "",
@@ -357,6 +434,7 @@ export default function Form({memberInfo, list, familyTree}: {
                   image: "",
                 })
                 setAvatar(null)
+                setMemberInfo({})
               }}
             >
               Create New
@@ -367,6 +445,7 @@ export default function Form({memberInfo, list, familyTree}: {
               variant="contained"
               color="primary"
               className="w-[150px]"
+              disabled={(!isEdit && !isEmpty(errors))}
             >
               Submit
             </Button>

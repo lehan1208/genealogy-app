@@ -8,6 +8,7 @@ import familyData from "../data/familyData.json";
 import {Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useEffect, useState} from "react";
+import {useMemberContext} from "@/app/1-common/3-context/member.context";
 
 function TransitionComponent(props: TransitionProps) {
   const style = useSpring({
@@ -25,8 +26,13 @@ function TransitionComponent(props: TransitionProps) {
 }
 
 export default function TreeView({getMemberInfo, familyTree = []}: {getMemberInfo: (data: any) => void, familyTree: any[]}, ) {
-  const [lastSelectedItem, setLastSelectedItem] = React.useState<string | null>(null);
+  const {memberInfo} = useMemberContext()
   const [treeData, setTreeData] = useState<any[]>([])
+  const [lastSelectedItem, setLastSelectedItem] = React.useState<string | null>(null);
+
+  useEffect(() => {
+    setLastSelectedItem(memberInfo?.id);
+  }, []);
 
   const handleItemSelectionToggle = (
     event: React.SyntheticEvent,
@@ -108,7 +114,7 @@ export default function TreeView({getMemberInfo, familyTree = []}: {getMemberInf
         slotProps={{item: {slots: {groupTransition: TransitionComponent}}}}
         items={newArray}
         onItemSelectionToggle={handleItemSelectionToggle}
-        // getItemId={(item) => item.id}
+        getItemId={(item) => item.id}
       />
     </Stack>
   );
