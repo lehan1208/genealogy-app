@@ -9,8 +9,6 @@ import {AccountTree} from "@mui/icons-material"
 export default function MemberTree() {
   const {familyDataTree} = useMemberContext()
   const [treeData, setTreeData] = useState<any>([])
-  const [selectedMember, setSelectedMember] = useState(familyDataTree[0])
-
 
   useEffect(() => {
     if (!isEmpty(familyDataTree)) {
@@ -27,8 +25,6 @@ export default function MemberTree() {
               <TreeNode
                 key={item.id}
                 node={item}
-                selectedMember={selectedMember}
-                setSelectedMember={setSelectedMember}
               />
             ))}
           </ul>
@@ -38,24 +34,17 @@ export default function MemberTree() {
   )
 }
 
-function TreeNode({node, selectedMember, setSelectedMember}: {
-  node: any,
-  selectedMember?: any,
-  setSelectedMember?: (e: any) => void
-}) {
+function TreeNode({node}: { node: any }) {
   const {setMemberInfo} = useMemberContext()
   const handleOnClickMember = (e: any, item: any) => {
     e.preventDefault()
     setMemberInfo(item)
-    if (setSelectedMember) {
-      setSelectedMember(item)
-    }
   }
 
   return (
     <li key={node.id}>
       <div>
-        <span className={node.gender} onClick={(e) => handleOnClickMember(e, node)} >
+        <span className={node.gender} onClick={(e) => handleOnClickMember(e, node)}>
           <img src={node?.image || "images/no-avatar.png"} alt={node.label} width={100} height={100}/>
           <p className="item-info">
              <span className="uppercase font-[700] text-[#444]">{node.label}
@@ -66,7 +55,6 @@ function TreeNode({node, selectedMember, setSelectedMember}: {
              </span>
             <p className="block mb-2 text-[#999] mt-2">
               {`(${DateTimeUtils.formatDate(node.dob)} - ${node.dod ? DateTimeUtils.formatDate(node.dod) : "Present"})`}
-
             </p>
           </p>
         </span>
@@ -92,8 +80,6 @@ function TreeNode({node, selectedMember, setSelectedMember}: {
               <TreeNode
                 key={child.id}
                 node={child}
-                selectedMember={selectedMember}
-                setSelectedMember={setSelectedMember}
               />
             ))}
           </ul>
