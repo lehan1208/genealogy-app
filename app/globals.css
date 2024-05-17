@@ -85,7 +85,7 @@
     .tree li::after {
         right: auto;
         left: 50%;
-        border-left: 1px solid #ccc;
+        border-left: 4px solid #ccc;
     }
     .tree li:only-child::after, .tree li:only-child::before {
         display: none;
@@ -112,7 +112,7 @@
         position: absolute;
         top: 0;
         left: 50%;
-        border-left: 1px solid #ccc;
+        border-left: 4px solid #ccc;
         width: 0;
         height: 20px;
     }
@@ -124,6 +124,8 @@
         text-decoration-line: none;
         border-radius: 5px;
         transition: .5s;
+        min-width: 200px;
+        min-height: 200px;
     }
     .tree li a img {
         width: 100px;
@@ -163,184 +165,161 @@
     }
 /*}*/
 
+.family-component {
+    width: 100vw;
+    padding-bottom: 60px;
 
-.org-tree ul {
-    padding-top: 20px;
-    position: relative;
 
-    transition: all 0.5s;
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-}
-
-.org-tree li {
-    float: left;
-    text-align: center;
-    list-style-type: none;
-    position: relative;
-    padding: 20px 5px 0 5px;
-
-    transition: all 0.5s;
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-}
-
-/*We will use ::before and ::after to draw the connectors*/
-
-.org-tree li::before,
-.org-tree li::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 50%;
-    border-top: 1px solid #ccc;
-    width: 50%;
-    height: 20px;
-}
-.org-tree li::after {
-    right: auto;
-    left: 50%;
-    border-left: 1px solid #ccc;
-}
-
-.org-tree li:only-child::after,
-.org-tree li:only-child::before {
-    display: none;
-}
-
-.org-tree li:only-child {
-    padding-top: 0;
-}
-
-.org-tree li:first-child::before,
-.org-tree li:last-child::after {
-    border: 0 none;
-}
-
-.org-tree li:last-child::before {
-    border-right: 1px solid #ccc;
-    border-radius: 0 5px 0 0;
-    -webkit-border-radius: 0 5px 0 0;
-    -moz-border-radius: 0 5px 0 0;
-}
-.org-tree li:first-child::after {
-    border-radius: 5px 0 0 0;
-    -webkit-border-radius: 5px 0 0 0;
-    -moz-border-radius: 5px 0 0 0;
-}
-
-.org-tree ul ul::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 50%;
-    border-left: 1px solid #ccc;
-    width: 0;
-    height: 20px;
-}
-
-.org-tree li a {
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    text-decoration: none;
-    color: #666;
-    font-family: arial, verdana, tahoma;
-    font-size: 11px;
-    display: inline-block;
-
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-
-    transition: all 0.5s;
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-}
-
-.org-tree li a:hover,
-.org-tree li a:hover + ul li a {
-    background: #c8e4f8;
-    color: #000;
-    border: 1px solid #94a0b4;
-}
-
-.org-tree li a:hover + ul li::after,
-.org-tree li a:hover + ul li::before,
-.org-tree li a:hover + ul::before,
-.org-tree li a:hover + ul ul::before {
-    border-color: #94a0b4;
-}
-
-.card {
-    position: relative;
-    padding-top: 50px;
-    /* width: 300px; */
-    width: 100%;
-    height: auto;
-    text-align: center;
-}
-
-.card .image {
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: -10px;
-    z-index: 100;
-}
-.card .image img {
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    border: 13px solid #96f6b7;
-}
-.card .card-body {
-    background: #fff;
-    height: auto;
-    text-align: center;
-    width: 300px;
-    margin-top: 40px;
-    border-radius: 16px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    position: relative;
-    z-index: -1;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.card .card-body h2 {
-    font-weight: 600;
-    line-height: 20px;
-}
-.card .card-body p {
-    line-height: 20px;
-    font-size: small;
-}
-.card .card-footer {
-    padding: 3px;
-    display: flex;
-    justify-content: space-around;
-
-    background: #96f6b7;
-    text-align: center;
-    bottom: 0;
-    position: relative;
-    width: 295px;
-    /*border-radius: 16px;*/
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    z-index: -1;
-    left: 50%;
-    transform: translateX(-50%);
-
-    button {
-        /*border: 1px solid #ccc*/
+    .tree {
+        white-space: nowrap;
+        min-width: 800px;
+        /*min-height:500px;*/
+        transform: scale(0.7);
+        transform-origin: center;
+    }
+    .tree ul {
+        padding-top: 20px;
+        position: relative;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+    }
+    .tree li {
+        /*float: left;*/
+        text-align: center;
+        list-style-type: none;
+        /*position: relative;*/
+        padding: 20px 5px 0 5px;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+    }
+    /*We will use ::before and ::after to draw the connectors*/
+    .tree li::before, .tree li::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 50%;
+        border-top: 4px solid #ccc;
+        width: 50%;
+        height: 20px;
+    }
+    .tree li::after {
+        right: auto;
+        left: 50%;
+        border-left: 4px solid #ccc;
+    }
+    /*We need to remove left-right connectors from elements without any siblings*/
+    .tree li:only-child::after, .tree li:only-child::before {
+        display: none;
+    }
+    /*Remove space from the top of single children*/
+    .tree li:only-child {
+        padding-top: 0;
+    }
+    /*Remove left connector from first child and right connector from last child*/
+    .tree li:first-child::before, .tree li:last-child::after {
+        border: 0 none;
+    }
+    /*Adding back the vertical connector to the last nodes*/
+    .tree li:last-child::before {
+        border-right: 4px solid #ccc;
+        border-radius: 0 5px 0 0;
+        -webkit-border-radius: 0 5px 0 0;
+        -moz-border-radius: 0 5px 0 0;
+    }
+    .tree li:first-child::after {
+        border-radius: 5px 0 0 0;
+        -webkit-border-radius: 5px 0 0 0;
+        -moz-border-radius: 5px 0 0 0;
+    }
+    /*Time to add downward connectors from parents*/
+    .tree ul ul::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border-left: 4px solid #ccc;
+        width: 0;
+        height: 20px;
+    }
+    .tree li div {
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        text-decoration: none;
+        color: #666;
+        font-family: arial, verdana, tahoma;
+        font-size: 11px;
+        display: inline-block;
+        min-width: 80px;
+        min-height: 30px;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        .item-info {
+            background-color: #f5f5f5;
+            padding: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            letter-spacing: 1px;
+        }
+        img {
+            width: 100px;
+            height: 100px;
+            /*margin-bottom: 10px !important;*/
+            border-radius: 100px;
+            margin: 10px auto 10px !important; ;
+        }
+    }
+    .tree li div .male {
+        background-color: #f0f8ff;
+        /*background-color:#ccc;*/
+        display: inline-block;
+        padding:10px;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        width: 250px;
+        min-width: 160px;
         cursor: pointer;
     }
+    .tree li div .female {
+        background-color: #ffe4e1;
+        display: inline-block;
+        padding:10px;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        width: 250px;
+        min-width: 160px;
+        cursor: pointer;
+    }
+    .tree li div .spacer {
+        background-color:lightblue;
+        display: inline-block;
+        width:10px;
+    }
+    /*Time for some hover effects*/
+    /*We will apply the hover effect the the lineage of the element also*/
+    .tree li div:hover, .tree li div:hover + ul li div {
+        background: #c8e4f8;
+        color: #cc0000;
+        border: 1px solid #94a0b4;
+    }
+    /*Connector styles on hover*/
+    .tree li div:hover + ul li::after,
+    .tree li div:hover + ul li::before,
+    .tree li div:hover + ul::before,
+    .tree li div:hover + ul ul::before {
+        p, span {
+            color: #000;
+        }
+        border-color: #94a0b4;
+    }
 }
-
 
 

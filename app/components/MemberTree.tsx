@@ -1,141 +1,104 @@
 "use client"
 import * as React from "react";
 import {Fragment, useEffect, useState} from "react";
-import {Button} from "@mui/material";
-import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import {isEmpty, isNil} from "lodash";
 import {useMemberContext} from "@/app/1-common/3-context/member.context";
 import DateTimeUtils from "@/app/1-common/2-utils/date.util";
-import Box from "@mui/material/Box";
-import MemberTreeDialog from "@/app/components/Dialog";
+import {isEmpty} from "lodash";
+import {AccountTree} from "@mui/icons-material"
 
-interface CardItemProps {
-  data?: any;
-  key?: string | number;
-  handleShowItemChild?: (item: any) => void;
-}
-
-// @ts-ignore
-export default function MemberTree({data, key}: {data?:any ,key?: number | string }) {
-
-  const [memberSelected, setMemberSelected] = useState<any>({})
-  const [isShowDialog, setIsShowDialog] = useState(false)
-  const [dataTree, setDataTree] = useState([])
+export default function MemberTree() {
   const {familyDataTree} = useMemberContext()
+  const [treeData, setTreeData] = useState<any>([])
+  const [selectedMember, setSelectedMember] = useState(familyDataTree[0])
+
 
   useEffect(() => {
-    if (!isNil(data)) {
-      setDataTree(data)
-    } else {
-      setDataTree(familyDataTree)
+    if (!isEmpty(familyDataTree)) {
+      setTreeData(familyDataTree)
     }
-  }, [JSON.stringify(data), JSON.stringify(familyDataTree)]);
-
-  const handleShowItemChild = (item: string) => {
-    setMemberSelected(item)
-    setIsShowDialog(true)
-  };
+  }, [JSON.stringify(familyDataTree)]);
 
   return (
-    <div className="card-item">
-      <nav className="tree">
-        <ul>
-          <li>
-            <TreeNode
-              handleShowItemChild={handleShowItemChild}
-              data={dataTree} key={key}
-            />
-            {
-              dataTree?.map((item: any, index: number) => {
-                return (
-                  <ul key={index}>
-                    <li>
-                      <TreeNode
-                        handleShowItemChild={handleShowItemChild}
-                        data={item.children} key={index}/>
-                    </li>
-                    <MemberTreeDialog
-                      isOpen={isShowDialog}
-                      setOpen={(e) => {
-                        setIsShowDialog(e)
-                      }}
-                      data={memberSelected}
-                    />
-                  </ul>
-                )
-              })
-            }
-          </li>
-        </ul>
-      </nav>
-
+    <div className="family-component w-full overflow-x-auto">
+      <form id="form1">
+        <div className="tree" id="FamilyTreeDiv">
+          <ul>
+            {treeData.map((item: any) => (
+              <TreeNode
+                key={item.id}
+                node={item}
+                selectedMember={selectedMember}
+                setSelectedMember={setSelectedMember}
+              />
+            ))}
+          </ul>
+        </div>
+      </form>
     </div>
-  );
+  )
 }
 
-export function TreeNode({
-                           handleShowItemChild,
-                           data,
-                         }: CardItemProps) {
-  const [isChildVisible, setIsChildVisible] = useState(false)
+function TreeNode({node, selectedMember, setSelectedMember}: {
+  node: any,
+  selectedMember?: any,
+  setSelectedMember?: (e: any) => void
+}) {
   const {setMemberInfo} = useMemberContext()
   const handleOnClickMember = (e: any, item: any) => {
     e.preventDefault()
     setMemberInfo(item)
-  }
-
-  const renderNodeItem = (item: any, index: string | number) => {
-    return (
-      <Fragment>
-        <a key={index} href={"#"} className="mr-4" onClick={(e) => handleOnClickMember(e, item)}>
-          <img src={item?.image || "images/no-avatar.png"} alt={item.label}/>
-          <span>
-          <span>{item.label}</span>
-          <p className="block mb-2">{`(${DateTimeUtils.formatDate(item.dob)} - ${item.dod ? DateTimeUtils.formatDate(item.dod) : "Present"})`}</p>
-          <Box display="flex" gap={10}>
-            <button
-              aria-label="hierarchy"
-              className={`border border-solid h-[40px] w-[40px] rounded-full mx-auto border-[#d8220c] text-[#d8220c]
-                ${!isEmpty(item.children) ? "" : "hidden"}
-              `}
-              onClick={() => {
-                setIsChildVisible(!isChildVisible)
-                if (handleShowItemChild && item.children?.length > 0) {
-                  handleShowItemChild(item)
-                }
-              }}
-            >
-            <AccountTreeIcon
-              sx={{transform: "scaleX(-1) rotate(90deg)"}}
-              className={`text-[20px] `}
-            />
-          </button>
-            {item.type !== "Root" && <Button sx={{marginLeft: "auto"}} variant="outlined" color="primary">
-              {item.type}
-            </Button>}
-          </Box>
-        </span>
-        </a>
-        {item.sub?.length > 0 &&
-          <TreeNode
-            handleShowItemChild={handleShowItemChild}
-            data={item.sub}
-            key={index}
-          />
-        }
-      </Fragment>
-    )
+    if (setSelectedMember) {
+      setSelectedMember(item)
+    }
   }
 
   return (
-    <>
-      {data?.length > 0 && data?.map((item: any, index: number) => {
-        return (
-          <>
-            {renderNodeItem(item, index)}
-          </>
+    <li key={node.id}>
+      <div>
+        <span className={node.gender} onClick={(e) => handleOnClickMember(e, node)} >
+          <img src={node?.image || "images/no-avatar.png"} alt={node.label} width={100} height={100}/>
+          <p className="item-info">
+             <span className="uppercase font-[700] text-[#444]">{node.label}
+               {node.children.length > 0 && <AccountTree
+                 sx={{transform: "scaleX(-1) rotate(90deg)"}}
+                 className={`text-[20px] text-[red] ml-5`}
+               />}
+             </span>
+            <p className="block mb-2 text-[#999] mt-2">
+              {`(${DateTimeUtils.formatDate(node.dob)} - ${node.dod ? DateTimeUtils.formatDate(node.dod) : "Present"})`}
+
+            </p>
+          </p>
+        </span>
+        {node?.sub?.map((subItem: any) => (
+          <Fragment key={subItem.id}>
+            <span className="spacer"></span>
+            <span className={subItem.gender} onClick={(e) => handleOnClickMember(e, subItem)}>
+              <img src={subItem?.image || "images/no-avatar.png"} alt={subItem.label} width={100} height={100}/>
+              <p className="item-info">
+                <span className="uppercase font-[700] text-[#444]">{subItem.label}</span>
+                <span className="block mb-2 text-[#999] mt-2">
+                  {`(${DateTimeUtils.formatDate(subItem.dob)} - ${subItem.dod ? DateTimeUtils.formatDate(subItem.dod) : "Present"})`}
+                </span>
+              </p>
+            </span>
+          </Fragment>
+        ))}
+      </div>
+      {
+        node?.children && (
+          <ul>
+            {node?.children?.map((child: any) => (
+              <TreeNode
+                key={child.id}
+                node={child}
+                selectedMember={selectedMember}
+                setSelectedMember={setSelectedMember}
+              />
+            ))}
+          </ul>
         )
-      })}
-    </>
-  )
+      }
+    </li>
+  );
 }

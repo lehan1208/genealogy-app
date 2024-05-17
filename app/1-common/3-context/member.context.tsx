@@ -16,7 +16,7 @@ const MemberProvider = ({children}: { children: React.ReactNode }) => {
     sub: [],
     children: [],
     dob: "08/07/1878",
-    dod: "04/09/1923",
+    dod: "1923",
     image: "images/john-lewis.jpg",
     label: "John Lewis",
     level: 0,

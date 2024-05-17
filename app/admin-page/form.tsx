@@ -316,7 +316,7 @@ export default function Form({memberInfo, list, familyTree, setMemberInfo}: {
           />
         </Grid>
 
-        {!isEdit && <Grid item xs={4}>
+        {!isEdit && <Grid item xs={2}>
           <Controller
             name="relateTo"
             control={control}
@@ -336,6 +336,29 @@ export default function Form({memberInfo, list, familyTree, setMemberInfo}: {
                   ))}
                 </Select>
                 <FormHelperText>{(errors?.relateTo?.message) as string || ""}</FormHelperText>
+              </FormControl>
+            )}
+          />
+        </Grid>}
+        {!isEdit && <Grid item xs={2}>
+          <Controller
+            name="gender"
+            control={control}
+            defaultValue={""}
+            rules={!isEdit ? {required: "Please choose gender"} : {}}
+            render={({field}) => !isEdit && (
+              <FormControl fullWidth variant="outlined" error={!!errors?.gender}>
+                <InputLabel id="relateTo">Gender</InputLabel>
+                <Select
+                  {...field}
+                  variant="standard"
+                  label="Gender"
+                  labelId="gender"
+                >
+                  <MenuItem key={"male"} value={"male"}>Male</MenuItem>
+                  <MenuItem key={"female"} value={"female"}>Female</MenuItem>
+                </Select>
+                <FormHelperText>{(errors?.gender?.message) as string || ""}</FormHelperText>
               </FormControl>
             )}
           />

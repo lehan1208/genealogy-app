@@ -59,6 +59,7 @@ export default function TreeView({getMemberInfo, familyTree = []}: {getMemberInf
         ...(item.bio && {bio: item.bio}),
         ...(item.level && {level: item.level}),
         ...(item.type && {type: item.type}),
+        ...(item.gender && {gender: item.gender}),
       }
       if (item.sub || item.children) {
         newItem.children = [];
@@ -99,7 +100,6 @@ export default function TreeView({getMemberInfo, familyTree = []}: {getMemberInf
 
   useEffect(() => {
     if (lastSelectedItem) {
-      console.log("CHECK findItemById(lastSelectedItem, familyTree) :=>>>>>>) ", findItemById(lastSelectedItem, familyTree));
       getMemberInfo(findItemById(lastSelectedItem, familyTree))
     }
   }, [lastSelectedItem]);
