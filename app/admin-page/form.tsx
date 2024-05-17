@@ -34,6 +34,7 @@ interface MemberInfoProps {
   level?: number;
   children?: MemberInfoProps[];
   sub?: MemberInfoProps[];
+  gender?: string
 }
 
 interface RelatedListProps {
@@ -89,7 +90,7 @@ export default function Form({memberInfo, list, familyTree, setMemberInfo}: {
       id: !isEdit ? NumberUtils.uuid() : memberInfo.id,
       sub: !isEdit ? [] : memberInfo?.sub,
       children: !isEdit ? [] : memberInfo?.children,
-      gender: !isEdit ? data?.gender : memberInfo.gender,
+      gender: !isEdit ? data?.gender : memberInfo?.gender,
     }
     console.log("CHECK payload :=>>>>>>) ", payload);
     updateLocalStorageData(payload, familyTree)
